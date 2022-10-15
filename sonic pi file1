@@ -1,0 +1,63 @@
+# Welcome to Sonic Pi
+
+use_bpm 120
+
+#PAD
+use_synth :hollow
+with_fx :reverb do
+  live_loop :note do
+    play choose([:C5, :E4]), attack: 8, release: 10,  amp: 0.5
+    sleep 8
+  end
+  live_loop :note2 do
+    play choose([:D4, :F5]), attack: 10, release: 12, amp: 0.5
+    sleep 10
+  end
+  live_loop :note2 do
+    play choose([:G4, :A4]), attack: 12, release: 12, amp: 0.5
+    sleep 10
+  end
+end
+
+#MELODY
+live_loop :melody do
+  with_synth :piano do
+    with_fx :distortion do
+      play scale(:C5, :blues_minor).choose, amp: 0.3
+      sleep ring(1,6,4,5,3,2,1,7,0.5).choose
+    end
+  end
+end
+
+#KICK
+live_loop :kick do
+  sample :drum_heavy_kick, amp: 0.5
+  sleep 4
+  sample :drum_heavy_kick, amp: 0.5
+  sleep 3
+  sample :drum_heavy_kick, amp: 0.5
+  sleep 1
+end
+
+#HIHAT
+live_loop :hihat do
+  
+  with_fx :slicer, phase: 0.25, pulse_width: 0.1 do
+    with_fx :hpf, cutoff: 130 do
+      with_synth :noise do
+        play :C1
+      end
+    end   
+  end
+  sleep 1
+end
+
+#SNARE
+live_loop :sn do
+  sleep 2
+  sample :drum_snare_soft, amp: 0.5
+  sleep 4
+end
+
+
+#FIANL
